@@ -6,12 +6,12 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 
-@TeleOp
+@Autonomous
 public class HelloWorld extends OpMode {
 
     @Override
     public void init(){
-        telemetry.addData("Hello", "Nishka Aghera");
+        telemetry.addData("Hello Autonomus", "Nishka Aghera");
 
     }
 
