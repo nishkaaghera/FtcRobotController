@@ -36,7 +36,6 @@ public class AprilTagWebcam {
                 .setDrawCubeProjection(false)
                 .setOutputUnits(DistanceUnit.CM, AngleUnit.DEGREES)
                 .setNumThreads(1)
-
                 .build();
 
         VisionPortal.Builder builder = new VisionPortal.Builder();
@@ -48,44 +47,35 @@ public class AprilTagWebcam {
         builder.addProcessor(aprilTagProcessor);
 
         visionPortal = builder.build();
-        // It's crucial to wait for the camera to be ready before trying to adjust settings.
 
         setManualExposure(6, 240);
     }
 
     private void setManualExposure(int exposureMS, int gain) {
-        // Wait for the camera to be open and streaming.
         if (visionPortal == null || visionPortal.getCameraState() != VisionPortal.CameraState.STREAMING) {
             telemetry.addData("Camera", "Waiting...");
-            // This loop will halt the init process until the camera is ready.
             while (visionPortal != null && visionPortal.getCameraState() != VisionPortal.CameraState.STREAMING) {
                 try { Thread.sleep(20); } catch (InterruptedException ignored) {}
             }
             telemetry.addData("Camera", "Ready!");
         }
 
-        // Set camera controls.
         if (visionPortal.getCameraState() == VisionPortal.CameraState.STREAMING) {
             try {
-                // Get the ExposureControl and GainControl
                 ExposureControl exposureControl = visionPortal.getCameraControl(ExposureControl.class);
                 GainControl gainControl = visionPortal.getCameraControl(GainControl.class);
 
-                // Set the exposure mode to Manual
                 if (exposureControl.getMode() != ExposureControl.Mode.Manual) {
                     exposureControl.setMode(ExposureControl.Mode.Manual);
-                    Thread.sleep(50); // Give the camera time to switch modes
+                    Thread.sleep(50);
                 }
 
-                // Set the exposure and gain
                 exposureControl.setExposure((long)exposureMS, TimeUnit.MILLISECONDS);
                 Thread.sleep(20);
                 gainControl.setGain(gain);
                 Thread.sleep(20);
 
             } catch (Exception e) {
-                // Handle exceptions, which might occur if the camera is unplugged
-                // or the controls are not supported on this camera.
                 telemetry.addData("Camera Control Error", e.getMessage());
                 telemetry.update();
             }
@@ -111,12 +101,21 @@ public class AprilTagWebcam {
             telemetry.addLine(String.format("\n==== (ID %d) Unknown", detectedId.id));
             telemetry.addLine(String.format("Center %6.0f %6.0f   (pixels)", detectedId.center.x, detectedId.center.y));
         }
-
     }
 
     public AprilTagDetection getTagBySpecificId(int id) {
         for (AprilTagDetection detection : detectedTags) {
             if (detection.id == id){
+                return detection;
+            }
+        }
+        return null;
+    }
+
+    // Find any tag whose ID falls inclusively between minId and maxId
+    public AprilTagDetection getTagInRange(int minId, int maxId) {
+        for (AprilTagDetection detection : detectedTags) {
+            if (detection.id >= minId && detection.id <= maxId) {
                 return detection;
             }
         }
