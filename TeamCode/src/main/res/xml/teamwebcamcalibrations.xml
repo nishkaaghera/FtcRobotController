@@ -158,4 +158,8 @@
 
     <!-- ======================================================================================= -->
 
+    <!--  goBILDA SKU: 3122-0004-0001, Calibrated by Ethan Doak, 2026.5.13 using 3DF Zephyr  -->
+    <Camera vid="0xC45" pid="0x366">
+        <Calibration size="640, 480" focalLength="545.584f, 545.584f" principalPoint="350.588f, 223.150f" distortionCoefficients="0.0290195, -0.0238128, 0, 0, -0.0378927, 0, 0, 0"/>
+    </Camera>
 </Calibrations>
