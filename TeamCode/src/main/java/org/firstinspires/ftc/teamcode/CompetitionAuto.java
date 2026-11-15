@@ -1,19 +1,5 @@
-package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.IMU;
-import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.Range;
-
-
-
-public class CompetitionAuto {/* Copyright (c) 2022 FIRST. All rights reserved.
+/* Copyright (c) 2022 FIRST. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided that
@@ -42,10 +28,12 @@ public class CompetitionAuto {/* Copyright (c) 2022 FIRST. All rights reserved.
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+
 package org.firstinspires.ftc.teamcode;
-public class CompetitionAuto extends LinearOpMode {
+
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.IMU;
@@ -104,7 +92,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 
     @Autonomous(name="Robot: Auto Drive By Gyro", group="Robot")
 
-    public class RobotAutoDriveByGyro_Linear extends LinearOpMode {
+    public class CompetitionAuto extends LinearOpMode {
 
         /* Declare OpMode members. */
         private DcMotor leftFrontDrive   = null;
@@ -173,8 +161,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
              *
              * To Do:  EDIT these two lines to match YOUR mounting configuration.
              */
-            RevHubOrientationOnRobot.LogoFacingDirection logoDirection = RevHubOrientationOnRobot.LogoFacingDirection.UP;
-            RevHubOrientationOnRobot.UsbFacingDirection  usbDirection  = RevHubOrientationOnRobot.UsbFacingDirection.FORWARD;
+            RevHubOrientationOnRobot.LogoFacingDirection logoDirection = RevHubOrientationOnRobot.LogoFacingDirection.LEFT;
+            RevHubOrientationOnRobot.UsbFacingDirection usbDirection = RevHubOrientationOnRobot.UsbFacingDirection.UP;
             RevHubOrientationOnRobot orientationOnRobot = new RevHubOrientationOnRobot(logoDirection, usbDirection);
 
             // Now initialize the IMU with this mounting orientation
@@ -211,10 +199,10 @@ import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
             //          Add a sleep(2000) after any step to keep the telemetry data visible for review
 
             driveStraight(DRIVE_SPEED, 24.0, 0.0);    // Drive Forward 24"
-            turnToHeading( TURN_SPEED, -45.0);               // Turn  CW to -45 Degrees
-            holdHeading( TURN_SPEED, -45.0, 0.5);   // Hold -45 Deg heading for a 1/2 second
+            turnToHeading( TURN_SPEED, 45.0);               // Turn  CW to -45 Degrees
+            holdHeading( TURN_SPEED, 45.0, 0.5);   // Hold -45 Deg heading for a 1/2 second
 
-            driveStraight(DRIVE_SPEED, 17.0, -45.0);  // Drive Forward 17" at -45 degrees (12"x and 12"y)
+            driveStraight(DRIVE_SPEED, 17.0, 45.0);  // Drive Forward 17" at -45 degrees (12"x and 12"y)
             turnToHeading( TURN_SPEED,  45.0);               // Turn  CCW  to  45 Degrees
             holdHeading( TURN_SPEED,  45.0, 0.5);    // Hold  45 Deg heading for a 1/2 second
 
@@ -464,4 +452,3 @@ import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
         }
     }
 
-}
