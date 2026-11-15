@@ -51,6 +51,9 @@ import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 //@Disabled
 public class BioBuzzStarterbotTeleopMecanum extends OpMode {
 
+    // Hold gamepad1 LEFT BUMPER for quarter-speed drive; release for normal drive.
+    private static final double SLOW_DRIVE_SCALE = 0.25;
+
     // Declare OpMode members.
     private DcMotor leftFrontDrive = null;
     private DcMotor leftBackDrive = null;
@@ -73,8 +76,8 @@ public class BioBuzzStarterbotTeleopMecanum extends OpMode {
      * in the launch() function to only run the windmill servo when the motor is spinning fast
      * enough to make a successful throw.
      */
-    public final int LAUNCHER_TARGET_VELOCITY = 1300; //3000 RPM
-    public final int LAUNCHER_MIN_VELOCITY = 1250; //3000 RPM
+    public final int LAUNCHER_TARGET_VELOCITY = 1250; //2678 RPM
+    public final int LAUNCHER_MIN_VELOCITY = 1200; //2571 RPM
 
 
     /*
@@ -228,8 +231,6 @@ public class BioBuzzStarterbotTeleopMecanum extends OpMode {
         /*
          * Show motor powers on the Driver Station via telemetry.
          */
-        telemetry.addData("Launcher speed", launcher.getVelocity());
-        telemetry.addData("intakePower", intakePower);
         telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftFrontPower, rightFrontPower);
         telemetry.addData("Triggers", "left (%.2f, right (%.2f)",gamepad1.left_trigger, gamepad1.right_trigger);
     }
@@ -242,6 +243,11 @@ public class BioBuzzStarterbotTeleopMecanum extends OpMode {
     }
 
     void mecanumDrive(double forward, double strafe, double rotate) {
+        // Square each input while keeping its direction: gentler control near center, full power at full stick.
+        forward = forward * Math.abs(forward);
+        strafe = strafe * Math.abs(strafe);
+        rotate = rotate * Math.abs(rotate);
+
         leftFrontPower = forward + strafe + rotate;
         rightFrontPower = forward - strafe - rotate;
         leftBackPower = forward - strafe + rotate;
@@ -256,6 +262,14 @@ public class BioBuzzStarterbotTeleopMecanum extends OpMode {
             rightFrontPower /= max;
             leftBackPower /= max;
             rightBackPower /= max;
+        }
+
+        // Apply after normalization so slow mode also works at full stick and diagonally.
+        if (gamepad1.left_bumper) {
+            leftFrontPower *= SLOW_DRIVE_SCALE;
+            rightFrontPower *= SLOW_DRIVE_SCALE;
+            leftBackPower *= SLOW_DRIVE_SCALE;
+            rightBackPower *= SLOW_DRIVE_SCALE;
         }
 
         /*
