@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.mechanisms;
+package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -10,6 +10,8 @@ import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
+
+
 
 
 
@@ -61,9 +63,9 @@ import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
      *  Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list
      */
 
-    @Autonomous(name="Robot: Auto Drive By Gyro", group="Robot")
+    @Autonomous(name="Robot: Auto B No Launch", group="Robot")
 
-    public class AutoCodeBNoLauch extends LinearOpMode {
+    public class AutoB1 extends LinearOpMode {
 
         /* Declare OpMode members. */
         private DcMotor leftFrontDrive   = null;
@@ -180,12 +182,11 @@ import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
             //          Add a sleep(2000) after any step to keep the telemetry data visible for review
 
 
-            turnToHeading(TURN_SPEED, -55.0);            // turn 45° left
-            holdHeading(TURN_SPEED, -55.0, 0.5);         // let it settle
-            driveStraight(DRIVE_SPEED, -30.0, -55.0);
-            turnToHeading(TURN_SPEED, -30.0);            // turn 45° left
-            holdHeading(TURN_SPEED, -30.0, 0.5);
-            driveStraight(DRIVE_SPEED, -30.0, -30.0);
+                    // let it settle
+            driveStraight(DRIVE_SPEED, -15.0, 0);
+            turnToHeading(TURN_SPEED, -90.0);            // turn 45° left
+            holdHeading(TURN_SPEED, -90.0, 0.5);
+            driveStraight(DRIVE_SPEED, -53.0, -90.0);
 
             // drive 93" forward, staying at 45°   // Drive Forward 24"
             // Turn  CW to -45 Degrees
@@ -433,4 +434,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
             YawPitchRollAngles orientation = imu.getRobotYawPitchRollAngles();
             return orientation.getYaw(AngleUnit.DEGREES);
         }
-}
+    }
+
+
